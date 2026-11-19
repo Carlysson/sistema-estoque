@@ -198,7 +198,7 @@ Todos trabalharão principalmente no mesmo arquivo, `estoque.py`. Por isso, ante
 
 Não alterem a assinatura de uma função utilizada por outro integrante sem avisar e combinar a mudança. Se houver conflito no Git, conversem e revisem o resultado antes de concluir a integração.
 
-### 7.1 Contrato de dados e funções (definido por João Victor)
+### 7.1 Contrato de dados e funções
 
 **Todos devem seguir exatamente estes nomes e tipos.** Qualquer mudança deve ser combinada no grupo antes.
 
