@@ -198,6 +198,70 @@ Todos trabalharão principalmente no mesmo arquivo, `estoque.py`. Por isso, ante
 
 Não alterem a assinatura de uma função utilizada por outro integrante sem avisar e combinar a mudança. Se houver conflito no Git, conversem e revisem o resultado antes de concluir a integração.
 
+### 7.1 Contrato de dados e funções (definido por João Victor)
+
+**Todos devem seguir exatamente estes nomes e tipos.** Qualquer mudança deve ser combinada no grupo antes.
+
+#### Arquivos
+
+| Arquivo | Conteúdo |
+|---|---|
+| `dados/produtos.json` | Lista de produtos (`[]` quando vazio) |
+| `dados/movimentacoes.json` | Lista de movimentações, da mais antiga para a mais recente (`[]` quando vazio) |
+
+No topo do `estoque.py`, usar constantes para os caminhos:
+
+```python
+ARQUIVO_PRODUTOS = "dados/produtos.json"
+ARQUIVO_MOVIMENTACOES = "dados/movimentacoes.json"
+```
+
+#### Produto (cada item de `produtos.json`)
+
+```json
+{"codigo": "001", "nome": "Arroz 5kg", "preco": 25.90, "quantidade": 10, "estoque_minimo": 5}
+```
+
+| Campo | Tipo | Regra |
+|---|---|---|
+| `codigo` | `str` | Único e não vazio. É texto para manter zeros à esquerda (`"001"`). |
+| `nome` | `str` | Não vazio. |
+| `preco` | `float` | Maior que 0. |
+| `quantidade` | `int` | Maior ou igual a 0. É o saldo atual. |
+| `estoque_minimo` | `int` | Maior ou igual a 0. |
+
+#### Movimentação (cada item de `movimentacoes.json`)
+
+```json
+{"data_hora": "18/11/2026 21:30:05", "tipo": "entrada", "codigo": "001",
+ "nome": "Arroz 5kg", "quantidade": 5, "saldo_anterior": 10, "saldo_atual": 15}
+```
+
+| Campo | Tipo | Regra |
+|---|---|---|
+| `data_hora` | `str` | Formato `"%d/%m/%Y %H:%M:%S"`, gerado com `datetime.now()`. |
+| `tipo` | `str` | Exatamente `"entrada"` ou `"saida"` (minúsculo, sem acento). |
+| `codigo`, `nome` | `str` | Copiados do produto no momento da operação. |
+| `quantidade` | `int` | Maior que 0. Quantidade movimentada. |
+| `saldo_anterior`, `saldo_atual` | `int` | Saldo antes e depois da operação. |
+
+#### Funções compartilhadas
+
+| Função | Responsável | Contrato |
+|---|---|---|
+| `carregar_dados(caminho)` | Carlysson | Retorna uma `list`. Se o arquivo não existir, estiver vazio ou inválido, retorna `[]` (sem quebrar o programa). |
+| `salvar_dados(caminho, dados)` | Carlysson | Grava a lista em JSON (`indent=4`, `ensure_ascii=False`). |
+| `localizar_produto(codigo)` | Paulista | Retorna o `dict` do produto ou `None` se não existir. |
+| `registrar_movimentacao(produto, tipo, quantidade, saldo_anterior, saldo_atual)` | Paulo | Monta o dicionário da movimentação (tabela acima) e o grava em `movimentacoes.json`. |
+
+#### Regras gerais
+
+- Quem **altera** produtos (cadastro, entrada e saída) deve chamar `salvar_dados(ARQUIVO_PRODUTOS, produtos)` logo após a alteração.
+- As funções de relatório e histórico (`relatorio_estoque_baixo`, `calcular_valor_total`, `listar_produtos_disponiveis`, `exibir_historico`) **não recebem parâmetros**, apenas leem os arquivos com `carregar_dados` e **não modificam** os dados.
+- "Abaixo do mínimo" significa `quantidade < estoque_minimo`. "Disponível" significa `quantidade > 0`.
+- Valores em reais são exibidos com 2 casas decimais, por exemplo `R$ 25.90`.
+- Funções de entrada de dados (`input`) devem tratar valores inválidos e repetir a pergunta, sem fechar o programa.
+
 ## 8. Roteiro de testes
 
 A tabela apresenta cenários que deverão ser testados quando as funcionalidades correspondentes estiverem implementadas. Os dados necessários deverão ser cadastrados pela equipe, pois os arquivos JSON começam vazios.
