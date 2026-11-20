@@ -1,9 +1,12 @@
 """Pontos de partida para as funções do Sistema de Gerenciamento de Estoque.
 
 As funções abaixo representam as responsabilidades planejadas para a equipe.
-Elas ainda não implementam as operações de estoque. Cada responsável deverá
-desenvolver, testar e integrar sua parte conforme o README.md.
+Cada responsável deverá desenvolver, testar e integrar sua parte conforme o README.md.
 """
+
+# Constantes dos caminhos dos arquivos JSON
+ARQUIVO_PRODUTOS = "dados/produtos.json"
+ARQUIVO_MOVIMENTACOES = "dados/movimentacoes.json"
 
 
 def carregar_dados(caminho):
@@ -24,12 +27,86 @@ def salvar_dados(caminho, dados):
     raise NotImplementedError("Gravação de JSON ainda não implementada.")
 
 
-def cadastrar_produto():
-    """Solicita e cadastra um novo produto.
 
-    TODO (Paulista): implementar cadastro e validações dos campos.
-    """
-    raise NotImplementedError("Cadastro de produtos ainda não implementado.")
+import math
+
+
+def ler_texto_obrigatorio(mensagem: str) -> str:
+    while True:
+        valor = input(mensagem).strip()
+        if valor:
+            return valor
+        print("Erro: este campo não pode ser vazio.")
+
+
+def ler_inteiro_nao_negativo(mensagem: str, erro_tipo: str, erro_negativo: str) -> int:
+    while True:
+        try:
+            valor = int(input(mensagem).strip())
+            if valor < 0:
+                print(erro_negativo)
+                continue
+            return valor
+        except ValueError:
+            print(erro_tipo)
+
+
+def ler_preco(mensagem: str) -> float:
+    while True:
+        entrada = input(mensagem).strip().replace(",", ".")
+        try:
+            valor = float(entrada)
+            if not math.isfinite(valor) or valor <= 0:
+                print("Erro: o preço deve ser um número finito maior que zero.")
+                continue
+            return valor
+        except ValueError:
+            print("Erro: informe um preço numérico válido.")
+
+
+def cadastrar_produto() -> dict:
+    """Solicita e cadastra um novo produto."""
+
+    produtos = carregar_dados(ARQUIVO_PRODUTOS)
+
+    while True:
+        codigo = ler_texto_obrigatorio("Código do produto: ")
+
+        if localizar_produto(codigo) is not None:
+            print("Erro: esse código já está cadastrado.")
+            continue
+
+        break
+
+    nome = ler_texto_obrigatorio("Nome do produto: ")
+    preco = ler_preco("Preço do produto: ")
+
+    quantidade = ler_inteiro_nao_negativo(
+        "Quantidade inicial: ",
+        "Erro: informe uma quantidade inteira válida.",
+        "Erro: a quantidade não pode ser negativa.",
+    )
+
+    estoque_minimo = ler_inteiro_nao_negativo(
+        "Estoque mínimo: ",
+        "Erro: informe um número inteiro válido.",
+        "Erro: o estoque mínimo não pode ser negativo.",
+    )
+
+    produto = {
+        "codigo": codigo,
+        "nome": nome,
+        "preco": preco,
+        "quantidade": quantidade,
+        "estoque_minimo": estoque_minimo,
+    }
+
+    produtos.append(produto)
+    salvar_dados(ARQUIVO_PRODUTOS, produtos)
+
+    print("\nProduto cadastrado com sucesso!")
+
+    return produto
 
 
 def listar_produtos():
@@ -41,11 +118,15 @@ def listar_produtos():
 
 
 def localizar_produto(codigo):
-    """Localiza um produto pelo código informado.
+    """Localiza um produto pelo código informado."""
 
-    TODO (Paulista): implementar a busca pelo código.
-    """
-    raise NotImplementedError("Busca de produtos ainda não implementada.")
+    produtos = carregar_dados(ARQUIVO_PRODUTOS)
+
+    for produto in produtos:
+        if produto["codigo"] == codigo:
+            return produto
+
+    return None
 
 
 def registrar_entrada():
