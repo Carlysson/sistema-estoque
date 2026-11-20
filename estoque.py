@@ -8,6 +8,8 @@ Cada responsável deverá desenvolver, testar e integrar sua parte conforme o RE
 ARQUIVO_PRODUTOS = "dados/produtos.json"
 ARQUIVO_MOVIMENTACOES = "dados/movimentacoes.json"
 
+from datetime import datetime
+
 
 def carregar_dados(caminho):
     """Carrega dados de um arquivo JSON.
@@ -128,30 +130,82 @@ def localizar_produto(codigo):
 
     return None
 
+def ler_quantidade_positiva(mensagem: str) -> int:
+    while True:
+        try:
+            valor = int(input(mensagem).strip())
+            if valor > 0:
+                return valor
+            print("Erro: a quantidade deve ser maior que zero.")
+        except ValueError:
+            print("Erro: informe uma quantidade inteira válida.")
 
-def registrar_entrada():
-    """Registra a entrada de mercadorias no estoque.
+def buscar_na_lista(produros, codigo):
+    """procura o prduto dentro da própia lista que será salva depois"""
+    for produto in produros:
+        if produto["codigo"] == codigo:
+            return produto
+    return None
 
-    TODO (Paulo): implementar entrada, atualização do saldo e validações.
-    """
-    raise NotImplementedError("Registro de entrada ainda não implementado.")
+def registra_entrada():
+    """Registra a entrada de produtos no estoque."""
+    produtos = carregar_dados(ARQUIVO_PRODUTOS)
+    codigo = ler_texto_obrigatorio("Código do produto: ")
+    produto = buscar_na_lista(produtos, codigo)
 
+    if produto is None:
+        print("Erro: produto não encontrado.")
+        return
 
-def registrar_saida():
-    """Registra a saída de mercadorias do estoque.
+    quantidade = ler_quantidade_positiva("Quantidade a entrar: ")
+    saldo_anterior = produto["quantidade"]
+    saldo_atual = saldo_anterior + quantidade
 
-    TODO (Paulo): implementar saída e validação para impedir saldo negativo.
-    """
-    raise NotImplementedError("Registro de saída ainda não implementado.")
+    produto["quantidade"] = saldo_atual
+    salvar_dados(ARQUIVO_PRODUTOS, produtos)
+    registrar_movimentação(produto, "entrada", quantidade, saldo_anterior, saldo_atual)
 
+    print(f"\nEntrada registrada! Saldo: {saldo_anterior} -> {saldo_atual}")
 
-def registrar_movimentacao(produto, tipo, quantidade, saldo_anterior, saldo_atual):
-    """Registra os dados de uma movimentação.
+    def registrar_saída():
+        """Registra a saída de produtos do estoque."""
+        produtos = carregar_dados(ARQUIVO_PRODUTOS)
+        codigo = ler_texto_obrigatorio("Código do produto: ")
+        produto = buscar_na_lista(produtos, codigo)
 
-    TODO (Paulo): implementar o registro de entradas e saídas no histórico.
-    """
-    raise NotImplementedError("Registro de movimentações ainda não implementado.")
+        if produto is None:
+            print("Erro: produto não encontrado.")
+            return
 
+        quantidade = ler_quantidade_positiva("Quantidade a sair: ")
+        saldo_anterior = produto["quantidade"]
+
+        if quantidade > saldo_anterior:
+            print(f"Erro: quantidade insuficiente em estoque. Saldo disponível: {saldo_anterior}.")
+            return
+
+        saldo_atual = saldo_anterior - quantidade
+        produto["quantidade"] = saldo_atual
+        salvar_dados(ARQUIVO_PRODUTOS, produtos)
+        registrar_movimentação(produto, "saída", quantidade, saldo_anterior, saldo_atual)
+
+        print(f"\nSaída registrada! Saldo: {saldo_anterior} -> {saldo_atual}")
+
+def registrar_movimentação(produto, tipo, quantidade, saldo_anterior, saldo_atual):
+    """Registra uma movimentação de entrada ou saída no histórico."""
+    movimentacoes = carregar_dados(ARQUIVO_MOVIMENTACOES)
+
+    movimentacao = {
+        "codigo": produto["codigo"],
+        "nome": produto["nome"],
+        "tipo": tipo,
+        "quantidade": quantidade,
+        "saldo_anterior": saldo_anterior,
+        "saldo_atual": saldo_atual,
+        "data_hora": datetime.now().isoformat(),
+    }
+    movimentacoes.append(movimentacao)
+    salvar_dados(ARQUIVO_MOVIMENTACOES, movimentacoes)
 
 def relatorio_estoque_baixo():
     """Apresenta produtos abaixo do estoque mínimo.
