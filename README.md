@@ -18,12 +18,12 @@ Além de propor uma solução para esse problema, o objetivo acadêmico é aplic
 
 As funcionalidades abaixo representam os requisitos do sistema final. As marcadas com ✅ já foram implementadas; as demais ainda estão em desenvolvimento.
 
-1. **Cadastro de produtos:** registrar código, nome, preço, quantidade inicial e estoque mínimo.
+1. ✅ **Cadastro de produtos:** registrar código, nome, preço, quantidade inicial e estoque mínimo.
 2. **Listagem de produtos:** apresentar os produtos cadastrados e suas informações.
-3. **Entrada de mercadorias:** registrar o recebimento de determinada quantidade de um produto.
-4. **Saída de mercadorias:** registrar a retirada de determinada quantidade.
-5. **Atualização do estoque:** atualizar a quantidade disponível após cada entrada ou saída.
-6. **Validação de saída:** bloquear uma retirada cuja quantidade seja maior que o saldo disponível.
+3. ✅ **Entrada de mercadorias:** registrar o recebimento de determinada quantidade de um produto.
+4. ✅ **Saída de mercadorias:** registrar a retirada de determinada quantidade.
+5. ✅ **Atualização do estoque:** atualizar a quantidade disponível após cada entrada ou saída.
+6. ✅ **Validação de saída:** bloquear uma retirada cuja quantidade seja maior que o saldo disponível.
 7. ✅ **Relatório de estoque baixo:** identificar produtos cuja quantidade esteja abaixo do estoque mínimo definido.
 8. ✅ **Cálculo do valor total:** estimar o valor armazenado usando preço unitário × quantidade disponível.
 9. ✅ **Relatório de produtos disponíveis:** apresentar produtos com quantidade maior que zero.
