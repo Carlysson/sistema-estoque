@@ -16,7 +16,7 @@ Além de propor uma solução para esse problema, o objetivo acadêmico é aplic
 
 ## 2. Funcionalidades a implementar
 
-As funcionalidades abaixo representam os requisitos do sistema final. **Nenhuma delas está implementada nesta versão-base.**
+As funcionalidades abaixo representam os requisitos do sistema final. As marcadas com ✅ já foram implementadas; as demais ainda estão em desenvolvimento.
 
 1. **Cadastro de produtos:** registrar código, nome, preço, quantidade inicial e estoque mínimo.
 2. **Listagem de produtos:** apresentar os produtos cadastrados e suas informações.
@@ -24,10 +24,10 @@ As funcionalidades abaixo representam os requisitos do sistema final. **Nenhuma 
 4. **Saída de mercadorias:** registrar a retirada de determinada quantidade.
 5. **Atualização do estoque:** atualizar a quantidade disponível após cada entrada ou saída.
 6. **Validação de saída:** bloquear uma retirada cuja quantidade seja maior que o saldo disponível.
-7. **Relatório de estoque baixo:** identificar produtos cuja quantidade esteja abaixo do estoque mínimo definido.
-8. **Cálculo do valor total:** estimar o valor armazenado usando preço unitário × quantidade disponível.
-9. **Relatório de produtos disponíveis:** apresentar produtos com quantidade maior que zero.
-10. **Histórico de movimentações:** consultar data/hora, tipo de operação, produto, quantidade e saldos anterior e atual.
+7. ✅ **Relatório de estoque baixo:** identificar produtos cuja quantidade esteja abaixo do estoque mínimo definido.
+8. ✅ **Cálculo do valor total:** estimar o valor armazenado usando preço unitário × quantidade disponível.
+9. ✅ **Relatório de produtos disponíveis:** apresentar produtos com quantidade maior que zero.
+10. ✅ **Histórico de movimentações:** consultar data/hora, tipo de operação, produto, quantidade e saldos anterior e atual.
 11. **Persistência em JSON:** salvar e recuperar os cadastros e as movimentações em arquivos locais.
 
 A equipe deverá implementar, testar e integrar essas operações. A presença de uma função planejada em `estoque.py` não significa que sua funcionalidade esteja pronta.
