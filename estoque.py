@@ -130,6 +130,7 @@ def localizar_produto(codigo):
 
     return None
 
+
 def ler_quantidade_positiva(mensagem: str) -> int:
     while True:
         try:
@@ -140,6 +141,7 @@ def ler_quantidade_positiva(mensagem: str) -> int:
         except ValueError:
             print("Erro: informe uma quantidade inteira válida.")
 
+
 def buscar_na_lista(produros, codigo):
     """procura o prduto dentro da própia lista que será salva depois"""
     for produto in produros:
@@ -147,7 +149,8 @@ def buscar_na_lista(produros, codigo):
             return produto
     return None
 
-def registra_entrada():
+
+def registrar_entrada():
     """Registra a entrada de produtos no estoque."""
     produtos = carregar_dados(ARQUIVO_PRODUTOS)
     codigo = ler_texto_obrigatorio("Código do produto: ")
@@ -163,35 +166,37 @@ def registra_entrada():
 
     produto["quantidade"] = saldo_atual
     salvar_dados(ARQUIVO_PRODUTOS, produtos)
-    registrar_movimentação(produto, "entrada", quantidade, saldo_anterior, saldo_atual)
+    registrar_movimentacao(produto, "entrada", quantidade, saldo_anterior, saldo_atual)
 
     print(f"\nEntrada registrada! Saldo: {saldo_anterior} -> {saldo_atual}")
 
-    def registrar_saída():
-        """Registra a saída de produtos do estoque."""
-        produtos = carregar_dados(ARQUIVO_PRODUTOS)
-        codigo = ler_texto_obrigatorio("Código do produto: ")
-        produto = buscar_na_lista(produtos, codigo)
 
-        if produto is None:
-            print("Erro: produto não encontrado.")
-            return
+def registrar_saida():
+    """Registra a saída de produtos do estoque."""
+    produtos = carregar_dados(ARQUIVO_PRODUTOS)
+    codigo = ler_texto_obrigatorio("Código do produto: ")
+    produto = buscar_na_lista(produtos, codigo)
 
-        quantidade = ler_quantidade_positiva("Quantidade a sair: ")
-        saldo_anterior = produto["quantidade"]
+    if produto is None:
+        print("Erro: produto não encontrado.")
+        return
 
-        if quantidade > saldo_anterior:
-            print(f"Erro: quantidade insuficiente em estoque. Saldo disponível: {saldo_anterior}.")
-            return
+    quantidade = ler_quantidade_positiva("Quantidade a sair: ")
+    saldo_anterior = produto["quantidade"]
 
-        saldo_atual = saldo_anterior - quantidade
-        produto["quantidade"] = saldo_atual
-        salvar_dados(ARQUIVO_PRODUTOS, produtos)
-        registrar_movimentação(produto, "saída", quantidade, saldo_anterior, saldo_atual)
+    if quantidade > saldo_anterior:
+        print(f"Erro: quantidade insuficiente em estoque. Saldo disponível: {saldo_anterior}.")
+        return
 
-        print(f"\nSaída registrada! Saldo: {saldo_anterior} -> {saldo_atual}")
+    saldo_atual = saldo_anterior - quantidade
+    produto["quantidade"] = saldo_atual
+    salvar_dados(ARQUIVO_PRODUTOS, produtos)
+    registrar_movimentacao(produto, "saida", quantidade, saldo_anterior, saldo_atual)
 
-def registrar_movimentação(produto, tipo, quantidade, saldo_anterior, saldo_atual):
+    print(f"\nSaída registrada! Saldo: {saldo_anterior} -> {saldo_atual}")
+
+
+def registrar_movimentacao(produto, tipo, quantidade, saldo_anterior, saldo_atual):
     """Registra uma movimentação de entrada ou saída no histórico."""
     movimentacoes = carregar_dados(ARQUIVO_MOVIMENTACOES)
 
@@ -202,10 +207,11 @@ def registrar_movimentação(produto, tipo, quantidade, saldo_anterior, saldo_at
         "quantidade": quantidade,
         "saldo_anterior": saldo_anterior,
         "saldo_atual": saldo_atual,
-        "data_hora": datetime.now().isoformat(),
+        "data_hora": datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
     }
     movimentacoes.append(movimentacao)
     salvar_dados(ARQUIVO_MOVIMENTACOES, movimentacoes)
+
 
 def relatorio_estoque_baixo():
     """Apresenta produtos abaixo do estoque mínimo."""
@@ -242,6 +248,7 @@ def relatorio_estoque_baixo():
 
 
 def calcular_valor_total():
+
     """Calcula o valor estimado total armazenado."""
 
     produtos = carregar_dados(ARQUIVO_PRODUTOS)
@@ -276,6 +283,8 @@ def calcular_valor_total():
     print(f"Valor total estimado: R$ {valor_total:.2f}")
     
     return valor_total
+
+
 def listar_produtos_disponiveis():
     """Apresenta produtos cuja quantidade seja maior que zero."""
 
@@ -308,7 +317,6 @@ def listar_produtos_disponiveis():
         print("Nenhum produto disponível em estoque.")
     else:
         print(f"Total de produtos disponíveis: {disponiveis}")
-    
 
 
 def exibir_historico():
@@ -350,6 +358,7 @@ def exibir_historico():
 
     print("-" * 86)
     print(f"Total de movimentações: {len(movimentacoes)}")
+
 
 def exibir_menu():
     """Apresenta o menu principal e recebe a opção do usuário.
