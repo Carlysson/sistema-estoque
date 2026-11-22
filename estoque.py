@@ -208,36 +208,148 @@ def registrar_movimentação(produto, tipo, quantidade, saldo_anterior, saldo_at
     salvar_dados(ARQUIVO_MOVIMENTACOES, movimentacoes)
 
 def relatorio_estoque_baixo():
-    """Apresenta produtos abaixo do estoque mínimo.
+    """Apresenta produtos abaixo do estoque mínimo."""
 
-    TODO (João Victor): implementar o relatório de estoque mínimo.
-    """
-    raise NotImplementedError("Relatório de estoque baixo ainda não implementado.")
+    produtos = carregar_dados(ARQUIVO_PRODUTOS)
+
+    print("\n" + "=" * 62)
+    print(" PRODUTOS ABAIXO DO ESTOQUE MÍNIMO")
+    print("=" * 62)
+
+    if len(produtos) == 0:
+        print("Nenhum produto cadastrado.")
+        return
+
+    print(f"{'Código':<8}{'Nome':<24}{'Qtd':>6}{'Mínimo':>8}{'Falta':>7}")
+    print("-" * 62)
+
+    encontrados = 0
+
+    for produto in produtos:
+        if produto["quantidade"] < produto["estoque_minimo"]:
+            falta = produto["estoque_minimo"] - produto["quantidade"]
+            print(
+                f"{produto['codigo']:<8}{produto['nome']:<24}"
+                f"{produto['quantidade']:>6}{produto['estoque_minimo']:>8}{falta:>7}")
+            
+            encontrados = encontrados + 1
+
+    print("-" * 62)
+    if encontrados == 0:
+        print("Nenhum produto abaixo do estoque mínimo.")
+    else:
+        print(f"Total de produtos abaixo do mínimo: {encontrados}")
 
 
 def calcular_valor_total():
-    """Calcula o valor estimado total armazenado.
+    """Calcula o valor estimado total armazenado."""
 
-    TODO (João Victor): implementar o cálculo de preço multiplicado pela quantidade.
-    """
-    raise NotImplementedError("Cálculo do valor total ainda não implementado.")
+    produtos = carregar_dados(ARQUIVO_PRODUTOS)
 
+    valor_total = 0.0 # acumulador: começa em 0
 
+    print("\n" + "=" * 62)
+    print(" VALOR TOTAL ARMAZENADO NO ESTOQUE ")
+    print("=" * 62)
+
+    if len(produtos) == 0:
+        print(" Nenhum produto cadastrado ")
+        print(f" Valor total estimado: R$ {valor_total:.2f}")
+        
+        return valor_total
+
+    print(f"{'Código':<8}{'Nome':<24}{'Qtd':>6}{'Preço':>11}{'Subtotal':>13}")
+    print("-" * 62)
+
+    for produto in produtos:
+        
+        subtotal = produto["preco"] * produto["quantidade"]
+        
+        valor_total = valor_total + subtotal
+        
+        print(
+            f"{produto['codigo']:<8}{produto['nome']:<24}{produto['quantidade']:>6}"
+            f"{'R$ ' + format(produto['preco'], '.2f'):>11}"
+            f"{'R$ ' + format(subtotal, '.2f'):>13}")
+
+    print("-" * 62)
+    print(f"Valor total estimado: R$ {valor_total:.2f}")
+    
+    return valor_total
 def listar_produtos_disponiveis():
-    """Apresenta produtos cuja quantidade seja maior que zero.
+    """Apresenta produtos cuja quantidade seja maior que zero."""
 
-    TODO (João Victor): implementar o relatório de produtos disponíveis.
-    """
-    raise NotImplementedError("Relatório de produtos disponíveis ainda não implementado.")
+    produtos = carregar_dados(ARQUIVO_PRODUTOS)
+
+    print("\n" + "=" * 62)
+    print(" PRODUTOS DISPONÍVEIS EM ESTOQUE")
+    print("=" * 62)
+
+    if len(produtos) ==0:
+        print("Nenhum produto cadastrado.")
+        return
+
+    print(f"{'Código':<8}{'Nome':<24}{'Qtd':>6}{'Preço':>12}")
+    print("-" * 62)
+
+    disponiveis = 0
+
+    for produto in produtos:
+        if produto["quantidade"] > 0:
+            print(
+                f"{produto['codigo']:<8}{produto['nome']:<24}{produto['quantidade']:>6}"
+                f"{'R$ ' + format(produto['preco'], '.2f'):>12}"
+            )
+            disponiveis = disponiveis + 1
+
+
+    print("-" * 62)
+    if disponiveis == 0:
+        print("Nenhum produto disponível em estoque.")
+    else:
+        print(f"Total de produtos disponíveis: {disponiveis}")
+    
 
 
 def exibir_historico():
-    """Apresenta o histórico de movimentações registradas.
+    """Apresenta o histórico de movimentações registradas."""
+    
+    movimentacoes = carregar_dados(ARQUIVO_MOVIMENTACOES)
 
-    TODO (João Victor): implementar a consulta e exibição do histórico.
-    """
-    raise NotImplementedError("Consulta do histórico ainda não implementada.")
+    print("\n" + "=" * 86)
+    print(" HISTÓRICO DE MOVIMENTAÇÕES")
+    print("=" * 86)
 
+    if len(movimentacoes) == 0:
+        print("Nenhuma movimentação registrada.")
+        return
+
+    print(
+        f"{'Data/hora':<21}{'Tipo':<9}{'Código':<8}{'Produto':<20}"
+        f"{'Qtd':>5}{'Anterior':>10}{'Atual':>8}"
+    )
+    print("-" * 86)
+
+    for mov in reversed(movimentacoes):
+        try:
+            data = datetime.fromisoformat(mov["data_hora"]).strftime("%d/%m/%Y %H:%M:%S")
+        except ValueError:
+            data = mov["data_hora"]
+
+
+        if mov["tipo"] == "entrada":
+            tipo = "Entrada"
+        elif mov["tipo"] in ("saida", "saída"):
+            tipo = "Saída"
+        else:
+            tipo = mov["tipo"]  
+        print(
+            f"{data:<21}{tipo:<9}{mov['codigo']:<8}{mov['nome']:<20}"
+            f"{mov['quantidade']:>5}{mov['saldo_anterior']:>10}{mov['saldo_atual']:>8}"
+        )
+
+    print("-" * 86)
+    print(f"Total de movimentações: {len(movimentacoes)}")
 
 def exibir_menu():
     """Apresenta o menu principal e recebe a opção do usuário.
