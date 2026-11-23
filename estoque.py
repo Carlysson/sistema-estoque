@@ -4,11 +4,13 @@ As funções abaixo representam as responsabilidades planejadas para a equipe.
 Cada responsável deverá desenvolver, testar e integrar sua parte conforme o README.md.
 """
 
+# Imports
+import math
+from datetime import datetime
+
 # Constantes dos caminhos dos arquivos JSON
 ARQUIVO_PRODUTOS = "dados/produtos.json"
 ARQUIVO_MOVIMENTACOES = "dados/movimentacoes.json"
-
-from datetime import datetime
 
 
 def carregar_dados(caminho):
@@ -27,10 +29,6 @@ def salvar_dados(caminho, dados):
     Responsável: Carlysson (coordenação da integração) / equipe (contrato comum).
     """
     raise NotImplementedError("Gravação de JSON ainda não implementada.")
-
-
-
-import math
 
 
 def ler_texto_obrigatorio(mensagem: str) -> str:
@@ -112,11 +110,25 @@ def cadastrar_produto() -> dict:
 
 
 def listar_produtos():
-    """Apresenta os produtos cadastrados.
+    """Exibe todos os produtos cadastrados."""
 
-    TODO (Paulista): implementar a listagem de produtos.
-    """
-    raise NotImplementedError("Listagem de produtos ainda não implementada.")
+    produtos = carregar_dados(ARQUIVO_PRODUTOS)
+
+    if not produtos:
+        print("Nenhum produto cadastrado.")
+        return
+
+    print("\n========== PRODUTOS CADASTRADOS ==========")
+
+    for produto in produtos:
+        print(f"\nCódigo: {produto['codigo']}")
+        print(f"Nome: {produto['nome']}")
+        print(f"Preço: R$ {produto['preco']:.2f}")
+        print(f"Quantidade: {produto['quantidade']}")
+        print(f"Estoque mínimo: {produto['estoque_minimo']}")
+
+    print("\n==========================================")
+
 
 
 def localizar_produto(codigo):
@@ -142,9 +154,9 @@ def ler_quantidade_positiva(mensagem: str) -> int:
             print("Erro: informe uma quantidade inteira válida.")
 
 
-def buscar_na_lista(produros, codigo):
+def buscar_na_lista(produtos, codigo):
     """procura o prduto dentro da própia lista que será salva depois"""
-    for produto in produros:
+    for produto in produtos:
         if produto["codigo"] == codigo:
             return produto
     return None
