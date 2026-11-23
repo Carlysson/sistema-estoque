@@ -1,11 +1,7 @@
-"""Pontos de partida para as funções do Sistema de Gerenciamento de Estoque.
-
-As funções abaixo representam as responsabilidades planejadas para a equipe.
-Cada responsável deverá desenvolver, testar e integrar sua parte conforme o README.md.
-"""
-
 # Imports
+import json
 import math
+import os
 from datetime import datetime
 
 # Constantes dos caminhos dos arquivos JSON
@@ -14,21 +10,41 @@ ARQUIVO_MOVIMENTACOES = "dados/movimentacoes.json"
 
 
 def carregar_dados(caminho):
-    """Carrega dados de um arquivo JSON.
+    if not os.path.exists(caminho):
+        return []
 
-    TODO: implementar a leitura do arquivo JSON e definir o tratamento de erros.
-    Responsável: Carlysson (coordenação da integração) / equipe (contrato comum).
-    """
-    raise NotImplementedError("Leitura de JSON ainda não implementada.")
+    try:
+        with open(caminho, "r", encoding="utf-8") as arquivo:
+            dados = json.load(arquivo)
+
+        if isinstance(dados, list):
+            return dados
+
+        print(f"Aviso: estrutura inválida em {caminho}.")
+        return []
+
+    except (json.JSONDecodeError, OSError):
+        print(f"Aviso: não foi possível carregar {caminho}.")
+        return []
 
 
 def salvar_dados(caminho, dados):
-    """Salva dados em um arquivo JSON.
+    pasta = os.path.dirname(caminho)
 
-    TODO: implementar a gravação dos dados e definir o tratamento de erros.
-    Responsável: Carlysson (coordenação da integração) / equipe (contrato comum).
-    """
-    raise NotImplementedError("Gravação de JSON ainda não implementada.")
+    if pasta:
+        os.makedirs(pasta, exist_ok=True)
+
+    try:
+        with open(caminho, "w", encoding="utf-8") as arquivo:
+            json.dump(
+                dados,
+                arquivo,
+                indent=4,
+                ensure_ascii=False
+            )
+
+    except OSError as erro:
+        print(f"Erro ao salvar os dados: {erro}")
 
 
 def ler_texto_obrigatorio(mensagem: str) -> str:
