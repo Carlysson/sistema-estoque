@@ -389,19 +389,62 @@ def exibir_historico():
 
 
 def exibir_menu():
-    """Apresenta o menu principal e recebe a opção do usuário.
+    """Apresenta o menu principal e recebe a opção do usuário."""
 
-    TODO (Carlysson): implementar o menu e combinar o fluxo com os demais integrantes.
-    """
-    raise NotImplementedError("Menu principal ainda não implementado.")
+    print("\n" + "=" * 54)
+    print("       SISTEMA DE GERENCIAMENTO DE ESTOQUE")
+    print("=" * 54)
+    print("1 - Cadastrar produto")
+    print("2 - Listar produtos")
+    print("3 - Registrar entrada")
+    print("4 - Registrar saída")
+    print("5 - Relatório de estoque baixo")
+    print("6 - Calcular valor total do estoque")
+    print("7 - Listar produtos disponíveis")
+    print("8 - Exibir histórico de movimentações")
+    print("0 - Sair")
+    print("=" * 54)
+
+    return input("Escolha uma opção: ").strip()
 
 
 def executar():
-    """Inicializa a versão-base do projeto sem executar funcionalidades pendentes."""
-    print("=" * 54)
-    print(" SISTEMA DE GERENCIAMENTO DE ESTOQUE")
-    print("=" * 54)
-    print("Versão-base do projeto.")
-    print("O sistema ainda está em desenvolvimento pela equipe.")
-    print("Consulte o README.md para conhecer os requisitos.")
-    print("As funcionalidades serão implementadas pelos integrantes.")
+    """Executa o fluxo principal do sistema."""
+
+    print("\nBem-vindo ao Sistema de Gerenciamento de Estoque!")
+
+    while True:
+        opcao = exibir_menu()
+
+        if opcao == "1":
+            cadastrar_produto()
+
+        elif opcao == "2":
+            listar_produtos()
+
+        elif opcao == "3":
+            registrar_entrada()
+
+        elif opcao == "4":
+            registrar_saida()
+
+        elif opcao == "5":
+            relatorio_estoque_baixo()
+
+        elif opcao == "6":
+            calcular_valor_total()
+
+        elif opcao == "7":
+            listar_produtos_disponiveis()
+
+        elif opcao == "8":
+            exibir_historico()
+
+        elif opcao == "0":
+            print("\nEncerrando o sistema. Até mais!")
+            break
+
+        else:
+            print("\nOpção inválida. Tente novamente.")
+
+        input("\nPressione ENTER para continuar...")
