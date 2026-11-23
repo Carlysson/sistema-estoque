@@ -1,36 +1,37 @@
 # Sistema de Gerenciamento de Estoque
 
-Projeto acadêmico desenvolvido em **Python 3**, com interface de terminal e armazenamento local em arquivos JSON. A proposta é apoiar o controle de mercadorias de pequenos comércios e, principalmente, aplicar os conceitos de **programação imperativa** por meio de uma organização procedural baseada em funções.
+Projeto acadêmico desenvolvido em **Python 3**, com interface de terminal e armazenamento local em arquivos JSON. O sistema tem como objetivo auxiliar no controle de mercadorias de pequenos comércios e aplicar os conceitos de **programação imperativa**, por meio de uma organização procedural baseada em funções.
 
-> **ATENÇÃO — VERSÃO-BASE PARA DESENVOLVIMENTO COLABORATIVO**
->
-> As funcionalidades descritas neste documento são requisitos planejados e **ainda precisam ser implementadas pela equipe**. Esta entrega contém a estrutura inicial, os pontos de partida do código e as orientações de trabalho. Não é um sistema comercial, multiusuário ou concluído.
+O projeto permite cadastrar produtos, consultar o estoque, registrar entradas e saídas, gerar relatórios e consultar o histórico de movimentações.
+
+---
 
 ## 1. Objetivo e problema
 
-O controle manual de mercadorias pode provocar divergências entre a quantidade anotada e a quantidade realmente disponível. Também pode dificultar a identificação de produtos em falta, atrasar consultas e tornar trabalhoso estimar o valor armazenado no comércio.
+O controle manual de mercadorias pode provocar divergências entre a quantidade registrada e a quantidade realmente disponível. Também pode dificultar a identificação de produtos com estoque baixo, atrasar consultas e tornar trabalhoso estimar o valor armazenado.
 
-A proposta é reunir essas operações em um programa simples executado pelo terminal. Quando desenvolvido, o sistema deverá permitir que a equipe registre produtos, acompanhe entradas e saídas, consulte relatórios e mantenha os dados salvos localmente.
+O Sistema de Gerenciamento de Estoque propõe uma solução simples para esse problema, reunindo as principais operações em um programa executado pelo terminal.
 
-Além de propor uma solução para esse problema, o objetivo acadêmico é aplicar a programação imperativa em Python: organizar instruções em sequência, utilizar variáveis, decisões, repetições e funções para modificar e consultar os dados.
+Além de solucionar uma necessidade prática, o objetivo acadêmico é aplicar os conceitos de programação imperativa em Python, utilizando variáveis, atribuições, estruturas condicionais, estruturas de repetição, funções e manipulação de dados.
 
-## 2. Funcionalidades a implementar
+## 2. Funcionalidades implementadas
 
-As funcionalidades abaixo representam os requisitos do sistema final. As marcadas com ✅ já foram implementadas; as demais ainda estão em desenvolvimento.
+O sistema possui as seguintes funcionalidades:
 
-1. ✅ **Cadastro de produtos:** registrar código, nome, preço, quantidade inicial e estoque mínimo.
-2. **Listagem de produtos:** apresentar os produtos cadastrados e suas informações.
-3. ✅ **Entrada de mercadorias:** registrar o recebimento de determinada quantidade de um produto.
-4. ✅ **Saída de mercadorias:** registrar a retirada de determinada quantidade.
-5. ✅ **Atualização do estoque:** atualizar a quantidade disponível após cada entrada ou saída.
-6. ✅ **Validação de saída:** bloquear uma retirada cuja quantidade seja maior que o saldo disponível.
-7. ✅ **Relatório de estoque baixo:** identificar produtos cuja quantidade esteja abaixo do estoque mínimo definido.
-8. ✅ **Cálculo do valor total:** estimar o valor armazenado usando preço unitário × quantidade disponível.
-9. ✅ **Relatório de produtos disponíveis:** apresentar produtos com quantidade maior que zero.
-10. ✅ **Histórico de movimentações:** consultar data/hora, tipo de operação, produto, quantidade e saldos anterior e atual.
-11. **Persistência em JSON:** salvar e recuperar os cadastros e as movimentações em arquivos locais.
-
-A equipe deverá implementar, testar e integrar essas operações. A presença de uma função planejada em `estoque.py` não significa que sua funcionalidade esteja pronta.
+1. **Cadastro de produtos:** registra código, nome, preço, quantidade inicial e estoque mínimo.
+2. **Validação cadastral:** impede códigos duplicados e solicita novamente os campos obrigatórios quando estão vazios ou inválidos.
+3. **Listagem de produtos:** apresenta os produtos cadastrados e suas informações.
+4. **Localização de produtos:** permite localizar um produto pelo código.
+5. **Entrada de mercadorias:** registra o recebimento de determinada quantidade de um produto.
+6. **Saída de mercadorias:** registra a retirada de determinada quantidade.
+7. **Atualização do estoque:** atualiza automaticamente a quantidade disponível após cada entrada ou saída.
+8. **Validação de saída:** impede retiradas superiores ao saldo disponível.
+9. **Relatório de estoque baixo:** identifica produtos cuja quantidade esteja abaixo do estoque mínimo definido.
+10. **Cálculo do valor total:** estima o valor armazenado utilizando preço unitário × quantidade disponível.
+11. **Relatório de produtos disponíveis:** apresenta produtos cuja quantidade seja maior que zero.
+12. **Histórico de movimentações:** apresenta data e hora, tipo de operação, produto, quantidade movimentada e saldos anterior e atual.
+13. **Persistência em JSON:** salva e recupera os cadastros e as movimentações em arquivos locais.
+14. **Menu principal:** permite acessar as funcionalidades e encerrar o programa por meio da opção 0.
 
 ## 3. Requisitos e ferramentas
 
@@ -39,20 +40,41 @@ A equipe deverá implementar, testar e integrar essas operações. A presença d
 | Linguagem | Python 3 |
 | Versão recomendada | Python 3.10 ou superior |
 | Interface | Terminal/console |
-| Armazenamento previsto | Arquivos JSON locais |
+| Armazenamento | Arquivos JSON locais |
 | Paradigma | Programação imperativa |
 | Organização | Programação procedural por funções |
 | Versionamento | Git e GitHub |
-| Bibliotecas externas | Nenhuma necessária para a proposta inicial |
+| Bibliotecas externas | Nenhuma necessária |
 
-Será possível utilizar o Prompt de Comando, PowerShell, terminal do Linux/macOS ou terminal integrado de uma IDE. O projeto não exige banco de dados ou interface gráfica.
+O projeto utiliza módulos da biblioteca padrão do Python, como `json`, `os`, `math` e `datetime`.
 
-## 4. Como executar a versão-base
+Não é necessário instalar banco de dados ou bibliotecas externas para executar a versão atual.
 
-1. Baixe o ZIP do projeto ou clone o repositório GitHub.
-2. Se tiver baixado o ZIP, extraia a pasta.
-3. Abra o terminal dentro da pasta `sistema-estoque/`, onde está localizado o arquivo `main.py`.
-4. Execute:
+## 4. Como executar o sistema
+
+### Pré-requisitos
+
+- Python 3 instalado.
+- Git instalado, caso opte por clonar o repositório.
+- Terminal, Prompt de Comando, PowerShell ou terminal integrado de uma IDE.
+
+### Clonando o repositório
+
+Execute:
+
+```bash
+git clone https://github.com/Carlysson/sistema-estoque.git
+```
+
+Entre na pasta:
+
+```bash
+cd sistema-estoque
+```
+
+### Executando o programa
+
+Na pasta raiz do projeto, onde está localizado o arquivo `main.py`, execute:
 
 ```bash
 python main.py
@@ -64,15 +86,35 @@ Dependendo da instalação do Python, também poderá ser necessário utilizar:
 python3 main.py
 ```
 
-ou, no Windows:
+No Windows:
 
 ```bash
 py main.py
 ```
 
-Nesta etapa, a execução deverá apenas exibir uma mensagem informando que o projeto está em desenvolvimento. **Ainda não existe um menu funcional e não será possível cadastrar ou movimentar produtos.** Isso é intencional: as funcionalidades serão desenvolvidas pelos integrantes.
+### Utilização
 
-Após a implementação do sistema, o menu deverá oferecer uma opção `0` para encerrar o programa. A equipe deverá combinar o comportamento do menu e sua integração com as demais funções.
+Após a inicialização, o programa apresenta o menu principal:
+
+```text
+======================================================
+       SISTEMA DE GERENCIAMENTO DE ESTOQUE
+======================================================
+1 - Cadastrar produto
+2 - Listar produtos
+3 - Registrar entrada
+4 - Registrar saída
+5 - Relatório de estoque baixo
+6 - Calcular valor total do estoque
+7 - Listar produtos disponíveis
+8 - Exibir histórico de movimentações
+0 - Sair
+======================================================
+```
+
+O usuário seleciona a operação digitando o número correspondente.
+
+Após a execução de uma operação, o sistema solicita que o usuário pressione ENTER para retornar ao menu. A opção 0 encerra o programa.
 
 ## 5. Estrutura do repositório
 
@@ -90,293 +132,400 @@ sistema-estoque/
 │   └── .gitkeep
 │
 ├── documentos/
-│   └── README_DOCUMENTACAO.md
+│   ├── README_DOCUMENTACAO.md
+│   └── (PDF final do projeto)
 │
 └── evidencias/
-    └── README_EVIDENCIAS.md
+    ├── README_EVIDENCIAS.md
+    └── (capturas de tela dos testes)
 ```
 
 ### Finalidade dos arquivos e diretórios
 
 | Caminho | Finalidade |
 |---|---|
-| `main.py` | Ponto de entrada. Importa `executar()` de `estoque.py` e chama essa função quando o arquivo é executado diretamente. Não deve concentrar funcionalidades de estoque. |
-| `estoque.py` | Arquivo central das funções do sistema. Contém, nesta versão, apenas os pontos de partida, docstrings e marcações `TODO`. |
-| `README.md` | Documentação principal: objetivo, requisitos, arquitetura, responsabilidades, testes e orientações de colaboração. |
-| `.gitignore` | Evita versionar arquivos temporários, ambientes virtuais e configurações locais desnecessárias. |
-| `dados/produtos.json` | Arquivo reservado aos dados dos produtos. Começa vazio (`[]`). |
-| `dados/movimentacoes.json` | Arquivo reservado ao histórico de entradas e saídas. Começa vazio (`[]`). |
-| `dados/.gitkeep` | Arquivo vazio para manter a pasta `dados/` no controle de versão mesmo quando estiver sem outros arquivos. |
-| `documentos/` | Local destinado ao documento PDF final. O README interno explica como prepará-lo. |
-| `evidencias/` | Local destinado às capturas de tela reais da execução e dos testes. |
+| `main.py` | Ponto de entrada do sistema. Importa e executa a função principal. |
+| `estoque.py` | Arquivo central, contendo as funções de cadastro, movimentação, relatórios, histórico, persistência e menu. |
+| `README.md` | Documentação principal do projeto. |
+| `.gitignore` | Evita versionar arquivos temporários e configurações locais desnecessárias. |
+| `dados/produtos.json` | Armazena os produtos cadastrados e seus saldos atuais. |
+| `dados/movimentacoes.json` | Armazena o histórico de entradas e saídas. |
+| `dados/.gitkeep` | Mantém a pasta de dados no controle de versão quando necessário. |
+| `documentos/` | Diretório destinado à documentação final em PDF e suas orientações. |
+| `evidencias/` | Diretório destinado às capturas de tela reais da execução e dos testes. |
 
-Os dois arquivos JSON começam vazios. A equipe deverá desenvolver as rotinas de leitura e gravação e definir, em conjunto, a estrutura dos registros. Não há produtos fictícios ou movimentações de demonstração. Evitem editar os JSON manualmente enquanto o programa estiver em execução e mantenham cópias de segurança durante o desenvolvimento.
+### Arquivos JSON
+
+Os dados são armazenados localmente em dois arquivos:
+
+- `produtos.json`: contém a lista de produtos cadastrados.
+- `movimentacoes.json`: contém a lista de movimentações realizadas.
+
+Quando não existem registros, a estrutura esperada é uma lista vazia:
+
+```json
+[]
+```
+
+O programa utiliza as rotinas de carregamento e gravação para consultar e atualizar essas informações.
 
 ## 6. Paradigma imperativo: conceitos no código
 
-O **paradigma imperativo** descreve a solução por meio de instruções que determinam, passo a passo, o que o programa deve executar. Essas instruções podem consultar valores, tomar decisões, repetir operações e alterar o estado dos dados.
+O projeto foi desenvolvido utilizando o **paradigma imperativo**, que descreve a solução por meio de instruções executadas passo a passo.
 
-O projeto deverá utilizar programação **procedural por funções**. Não é necessário criar classes próprias como estrutura central da aplicação. Os dados poderão ser representados por estruturas simples do Python, como listas e dicionários, conforme o formato que a equipe combinar.
+A organização é procedural, com funções responsáveis por tarefas específicas e estruturas simples do Python, como listas e dicionários.
 
-A seguir estão cinco conceitos que deverão ser identificados e demonstrados no código final. Os exemplos indicam onde poderão aparecer; não representam funcionalidades já implementadas.
+A seguir estão os principais conceitos imperativos identificados no código.
 
 ### 6.1 Variáveis e atribuições
 
-Variáveis armazenam valores que serão utilizados durante a execução. A atribuição associa um valor a um nome e o programa poderá atualizar esse valor conforme as operações realizadas.
+Variáveis armazenam valores utilizados durante a execução. A atribuição associa um valor a um nome e permite atualizar esse valor conforme as operações realizadas.
 
-No sistema, poderão ser utilizadas para guardar o código de um produto, seu preço, a quantidade solicitada e o saldo atual. Por exemplo, durante uma entrada, uma variável de saldo poderá receber o valor anterior somado à quantidade recebida.
+Exemplo presente na movimentação de estoque:
 
-Isso caracteriza a programação imperativa porque o programa executa comandos que consultam e modificam valores ao longo do procedimento.
+```python
+saldo_anterior = produto["quantidade"]
+saldo_atual = saldo_anterior + quantidade
 
-### 6.2 Condicionais (`if`, `elif`, `else`)
+produto["quantidade"] = saldo_atual
+```
 
-As condicionais permitem escolher qual conjunto de instruções será executado conforme uma condição.
+O programa utiliza variáveis para armazenar o saldo anterior, a quantidade movimentada e o saldo atualizado.
 
-No sistema, deverão aparecer, por exemplo, na validação de um código, na verificação de campos obrigatórios e na regra que impede uma saída maior que o saldo disponível. A equipe poderá utilizar `if`, `elif` e `else` para tratar os diferentes resultados.
+### 6.2 Condicionais (`if`, `elif` e `else`)
 
-Esse conceito é imperativo porque determina explicitamente o caminho de execução que o programa seguirá.
+As estruturas condicionais permitem escolher quais instruções serão executadas de acordo com determinada condição.
 
-### 6.3 Estruturas de repetição (`while`, `for`)
+Exemplo da validação de saída:
 
-As estruturas de repetição executam instruções mais de uma vez. O `while` repete enquanto uma condição for verdadeira; o `for` percorre os elementos de uma sequência.
+```python
+if quantidade > saldo_anterior:
+    print("Erro: quantidade insuficiente em estoque.")
+    return
+```
 
-No sistema final, um `while` poderá manter o menu ativo até que o usuário escolha encerrar. Um `for` poderá percorrer a lista de produtos para exibi-los ou verificar quais estão abaixo do estoque mínimo.
+Essa condição impede que o usuário retire uma quantidade superior à disponível.
 
-A repetição caracteriza a programação imperativa porque descreve explicitamente a execução sucessiva de comandos.
+As condicionais também são utilizadas nas validações cadastrais e na seleção das opções do menu.
+
+### 6.3 Estruturas de repetição (`while` e `for`)
+
+As estruturas de repetição permitem executar instruções várias vezes.
+
+O `while` é utilizado para manter o menu em funcionamento:
+
+```python
+while True:
+    opcao = exibir_menu()
+
+    if opcao == "0":
+        break
+```
+
+O `for` é utilizado para percorrer os produtos cadastrados e realizar consultas:
+
+```python
+for produto in produtos:
+    if produto["quantidade"] > 0:
+        print(produto["nome"])
+```
 
 ### 6.4 Funções e procedimentos
 
-Funções agrupam instruções relacionadas a uma tarefa e permitem organizar o programa em partes menores. Podem receber parâmetros e, quando necessário, retornar resultados.
+As funções agrupam instruções relacionadas a uma tarefa e organizam o programa em partes menores.
 
-No projeto, funções como `cadastrar_produto()`, `registrar_entrada()` e `exibir_historico()` deverão concentrar responsabilidades específicas. As assinaturas iniciais estão em `estoque.py`, mas seus corpos ainda precisam ser desenvolvidos.
+Alguns exemplos presentes no projeto:
 
-A organização em funções não transforma automaticamente o programa em orientado a objetos. O projeto continuará procedural se a equipe utilizar funções e estruturas de dados simples, sem adotar classes próprias como estrutura central.
+- `cadastrar_produto()`
+- `listar_produtos()`
+- `registrar_entrada()`
+- `registrar_saida()`
+- `relatorio_estoque_baixo()`
+- `calcular_valor_total()`
+- `exibir_historico()`
+- `carregar_dados()`
+- `salvar_dados()`
+- `exibir_menu()`
+- `executar()`
+
+Cada função possui uma responsabilidade específica, facilitando a organização, manutenção e compreensão do código.
 
 ### 6.5 Sequência de comandos
 
-A sequência representa a ordem em que as instruções são executadas. A ordem é importante porque algumas etapas dependem dos resultados das anteriores.
+A sequência representa a ordem em que as instruções são executadas.
 
-Em uma futura saída de mercadoria, por exemplo, o programa deverá localizar o produto, receber a quantidade solicitada, verificar o saldo, atualizar a quantidade e registrar a movimentação. A equipe deverá implementar e testar essa ordem.
+Durante uma saída de mercadoria, por exemplo, o programa:
 
-Esse conceito caracteriza a programação imperativa porque a solução é descrita como uma sequência explícita de ações.
+1. Carrega os produtos.
+2. Solicita o código do produto.
+3. Localiza o produto informado.
+4. Solicita a quantidade desejada.
+5. Verifica se existe saldo suficiente.
+6. Atualiza a quantidade disponível.
+7. Salva os dados atualizados.
+8. Registra a movimentação no histórico.
+
+Essa ordem garante que as operações sejam realizadas de maneira organizada.
+
+A utilização desses conceitos demonstra a aplicação prática da programação imperativa em Python.
 
 ## 7. Divisão de responsabilidades
 
-A divisão abaixo foi combinada pela equipe e deverá ser preservada durante o desenvolvimento.
+A equipe organizou o desenvolvimento de acordo com as seguintes responsabilidades:
 
 | Integrante | Responsabilidade principal | Atividades |
 |---|---|---|
-| **Carlysson** | Coordenação e integração | Organizar o repositório, integrar e revisar as alterações, acompanhar o menu e o fluxo principal, consolidar a documentação e coordenar a entrega. |
-| **João Victor** | Relatórios e históricos | Implementar e revisar o relatório de estoque mínimo, o cálculo do valor total e o relatório de produtos disponíveis; exibir o histórico; conferir os resultados com os dados registrados. |
-| **Paulo** | Entradas e saídas | Registrar entradas e saídas, atualizar quantidades, impedir retiradas acima do saldo e gravar os dados de cada movimentação. |
-| **Paulista** | Cadastro e listagem | Implementar cadastro, listagem, localização de produtos e validações cadastrais, como código duplicado e campos inválidos. |
+| **Carlysson** | Coordenação e integração | Organização do repositório, integração e revisão das alterações, persistência JSON, menu, fluxo principal e consolidação da documentação. |
+| **João Victor** | Relatórios e históricos | Relatório de estoque mínimo, cálculo do valor total, relatório de produtos disponíveis, exibição do histórico e conferência dos resultados. |
+| **Paulo** | Entradas e saídas | Registro de entradas e saídas, atualização de quantidades, bloqueio de retiradas acima do saldo e registro das movimentações. |
+| **Paulista** | Cadastro e listagem | Cadastro, listagem, localização de produtos e validações cadastrais, como códigos duplicados e campos inválidos. |
 
-### Combinados de equipe
+### Combinados da equipe
 
-- Cada integrante deverá trabalhar principalmente na tarefa que lhe foi atribuída.
-- Mudanças que afetem outras partes do sistema deverão ser comunicadas aos demais integrantes.
-- Evitem editar simultaneamente o mesmo trecho de `estoque.py` sem alinhamento prévio.
-- Façam commits pequenos, frequentes e verdadeiros, descrevendo as alterações realizadas.
-- Testem a parte desenvolvida antes de integrá-la à versão compartilhada.
-- Todos deverão conhecer o funcionamento geral e conseguir explicar o projeto.
-- Carlysson coordenará a integração e acompanhará o fluxo principal.
-- **Paulo registra as movimentações** de entrada e saída; **João Victor consulta e apresenta o histórico** dessas movimentações. São responsabilidades diferentes e complementares.
-
-### Sequência sugerida de desenvolvimento
-
-1. Ler os requisitos, conferir a estrutura e executar a versão-base.
-2. Implementar e testar cadastro, listagem, localização e validações cadastrais.
-3. Implementar e testar entradas, saídas, atualização do saldo e bloqueio de saída excessiva.
-4. Implementar e testar relatórios e consulta do histórico.
-5. Integrar as alterações e resolver conflitos.
-6. Testar o fluxo completo com dados cadastrados pela própria equipe.
-7. Preparar o PDF, as evidências e a apresentação.
+- Cada integrante deve conhecer e conseguir explicar o funcionamento geral do sistema.
+- Alterações que afetem outras partes do código devem ser comunicadas aos demais integrantes.
+- Mudanças nas assinaturas das funções compartilhadas devem ser combinadas previamente.
+- Os commits devem descrever as alterações realmente realizadas.
+- O código deve ser testado antes de sua integração à versão compartilhada.
+- A integração deve preservar o contrato de dados definido pela equipe.
 
 ### Integração em `estoque.py`
 
-Todos trabalharão principalmente no mesmo arquivo, `estoque.py`. Por isso, antes de implementar, combinem os nomes das funções, seus parâmetros, os valores que retornam e a forma como os dados serão compartilhados. Por exemplo, as funções de relatório precisarão consultar a mesma estrutura de produtos que as funções de cadastro e movimentação atualizam.
+As funcionalidades estão organizadas principalmente no arquivo `estoque.py`.
 
-Não alterem a assinatura de uma função utilizada por outro integrante sem avisar e combinar a mudança. Se houver conflito no Git, conversem e revisem o resultado antes de concluir a integração.
+Para evitar conflitos, os integrantes combinaram os nomes das funções, os parâmetros e a estrutura dos dados utilizados.
+
+Paulo é responsável por registrar as movimentações, enquanto João Victor é responsável por consultar e apresentar o histórico dessas operações.
 
 ### 7.1 Contrato de dados e funções
 
-**Todos devem seguir exatamente estes nomes e tipos.** Qualquer mudança deve ser combinada no grupo antes.
+Todos os integrantes devem respeitar a estrutura de dados compartilhada.
 
 #### Arquivos
 
 | Arquivo | Conteúdo |
 |---|---|
-| `dados/produtos.json` | Lista de produtos (`[]` quando vazio) |
-| `dados/movimentacoes.json` | Lista de movimentações, da mais antiga para a mais recente (`[]` quando vazio) |
+| `dados/produtos.json` | Lista de produtos. |
+| `dados/movimentacoes.json` | Lista de movimentações, da mais antiga para a mais recente. |
 
-No topo do `estoque.py`, usar constantes para os caminhos:
+Os caminhos são definidos por constantes em `estoque.py`:
 
 ```python
 ARQUIVO_PRODUTOS = "dados/produtos.json"
 ARQUIVO_MOVIMENTACOES = "dados/movimentacoes.json"
 ```
 
-#### Produto (cada item de `produtos.json`)
+#### Produto
+
+Cada produto é representado por um dicionário com a seguinte estrutura:
 
 ```json
-{"codigo": "001", "nome": "Arroz 5kg", "preco": 25.90, "quantidade": 10, "estoque_minimo": 5}
+{
+    "codigo": "001",
+    "nome": "Arroz 5kg",
+    "preco": 25.90,
+    "quantidade": 10,
+    "estoque_minimo": 5
+}
 ```
 
 | Campo | Tipo | Regra |
 |---|---|---|
-| `codigo` | `str` | Único e não vazio. É texto para manter zeros à esquerda (`"001"`). |
+| `codigo` | `str` | Único e não vazio. |
 | `nome` | `str` | Não vazio. |
-| `preco` | `float` | Maior que 0. |
-| `quantidade` | `int` | Maior ou igual a 0. É o saldo atual. |
-| `estoque_minimo` | `int` | Maior ou igual a 0. |
+| `preco` | `float` | Número finito maior que zero. |
+| `quantidade` | `int` | Maior ou igual a zero. |
+| `estoque_minimo` | `int` | Maior ou igual a zero. |
 
-#### Movimentação (cada item de `movimentacoes.json`)
+O código é armazenado como texto para preservar possíveis zeros à esquerda.
+
+#### Movimentação
+
+Cada movimentação é representada por um dicionário:
 
 ```json
-{"data_hora": "18/11/2026 21:30:05", "tipo": "entrada", "codigo": "001",
- "nome": "Arroz 5kg", "quantidade": 5, "saldo_anterior": 10, "saldo_atual": 15}
+{
+    "data_hora": "18/11/2026 21:30:05",
+    "tipo": "entrada",
+    "codigo": "001",
+    "nome": "Arroz 5kg",
+    "quantidade": 5,
+    "saldo_anterior": 10,
+    "saldo_atual": 15
+}
 ```
 
 | Campo | Tipo | Regra |
 |---|---|---|
-| `data_hora` | `str` | Formato `"%d/%m/%Y %H:%M:%S"`, gerado com `datetime.now()`. |
-| `tipo` | `str` | Exatamente `"entrada"` ou `"saida"` (minúsculo, sem acento). |
-| `codigo`, `nome` | `str` | Copiados do produto no momento da operação. |
-| `quantidade` | `int` | Maior que 0. Quantidade movimentada. |
-| `saldo_anterior`, `saldo_atual` | `int` | Saldo antes e depois da operação. |
+| `data_hora` | `str` | Formato `%d/%m/%Y %H:%M:%S`. |
+| `tipo` | `str` | `entrada` ou `saida`. |
+| `codigo` | `str` | Código do produto movimentado. |
+| `nome` | `str` | Nome do produto no momento da operação. |
+| `quantidade` | `int` | Quantidade movimentada, maior que zero. |
+| `saldo_anterior` | `int` | Saldo antes da operação. |
+| `saldo_atual` | `int` | Saldo após a operação. |
 
 #### Funções compartilhadas
 
-| Função | Responsável | Contrato |
+| Função | Responsabilidade | Descrição |
 |---|---|---|
-| `carregar_dados(caminho)` | Carlysson | Retorna uma `list`. Se o arquivo não existir, estiver vazio ou inválido, retorna `[]` (sem quebrar o programa). |
-| `salvar_dados(caminho, dados)` | Carlysson | Grava a lista em JSON (`indent=4`, `ensure_ascii=False`). |
-| `localizar_produto(codigo)` | Paulista | Retorna o `dict` do produto ou `None` se não existir. |
-| `registrar_movimentacao(produto, tipo, quantidade, saldo_anterior, saldo_atual)` | Paulo | Monta o dicionário da movimentação (tabela acima) e o grava em `movimentacoes.json`. |
+| `carregar_dados(caminho)` | Carlysson | Carrega uma lista a partir de um arquivo JSON. |
+| `salvar_dados(caminho, dados)` | Carlysson | Grava uma lista em arquivo JSON. |
+| `localizar_produto(codigo)` | Paulista | Retorna o produto encontrado ou `None`. |
+| `registrar_movimentacao(produto, tipo, quantidade, saldo_anterior, saldo_atual)` | Paulo | Registra e salva uma movimentação. |
 
 #### Regras gerais
 
-- Quem **altera** produtos (cadastro, entrada e saída) deve chamar `salvar_dados(ARQUIVO_PRODUTOS, produtos)` logo após a alteração.
-- As funções de relatório e histórico (`relatorio_estoque_baixo`, `calcular_valor_total`, `listar_produtos_disponiveis`, `exibir_historico`) **não recebem parâmetros**, apenas leem os arquivos com `carregar_dados` e **não modificam** os dados.
-- "Abaixo do mínimo" significa `quantidade < estoque_minimo`. "Disponível" significa `quantidade > 0`.
-- Valores em reais são exibidos com 2 casas decimais, por exemplo `R$ 25.90`.
-- Funções de entrada de dados (`input`) devem tratar valores inválidos e repetir a pergunta, sem fechar o programa.
+- As funções que alteram os produtos devem salvar os dados atualizados em `produtos.json`.
+- As movimentações devem ser registradas em `movimentacoes.json`.
+- As funções de relatório e histórico consultam os dados, sem alterar o estoque.
+- Um produto está abaixo do mínimo quando `quantidade < estoque_minimo`.
+- Um produto está disponível quando `quantidade > 0`.
+- Os valores monetários são exibidos com duas casas decimais.
+- As entradas de dados devem tratar valores inválidos e permitir nova tentativa.
+- Uma saída superior ao saldo disponível deve ser recusada.
 
 ## 8. Roteiro de testes
 
-A tabela apresenta cenários que deverão ser testados quando as funcionalidades correspondentes estiverem implementadas. Os dados necessários deverão ser cadastrados pela equipe, pois os arquivos JSON começam vazios.
+Os cenários abaixo devem ser utilizados para validar o funcionamento do sistema integrado.
 
 | Cenário | Ação | Resultado esperado |
 |---|---|---|
-| Cadastro correto | Inserir código novo e dados válidos. | Produto salvo e listado. |
+| Inicialização | Executar `python main.py`. | Menu principal apresentado sem erros. |
+| Opção inválida | Informar uma opção inexistente. | Mensagem de opção inválida e retorno ao menu. |
+| Encerramento | Selecionar a opção `0`. | Programa encerrado corretamente. |
+| Cadastro correto | Inserir código novo e dados válidos. | Produto cadastrado e salvo. |
 | Código duplicado | Repetir um código existente. | Cadastro recusado. |
-| Campo vazio | Não informar campo obrigatório. | Solicitação de novo valor ou mensagem de validação. |
-| Preço inválido | Informar texto, zero ou valor negativo. | Solicitação de preço válido. |
-| Entrada | Dar entrada em produto existente. | Saldo aumenta e evento entra no histórico. |
-| Saída válida | Retirar quantidade disponível. | Saldo diminui e evento entra no histórico. |
-| Saída excessiva | Retirar mais do que o saldo. | Operação bloqueada e saldo preservado. |
+| Campo vazio | Não informar um campo obrigatório. | Solicitação de novo valor. |
+| Preço inválido | Informar texto, zero ou número negativo. | Solicitação de preço válido. |
+| Entrada | Registrar entrada em produto existente. | Saldo aumentado e movimentação registrada. |
+| Saída válida | Retirar quantidade disponível. | Saldo diminuído e movimentação registrada. |
+| Saída excessiva | Retirar mais que o saldo. | Operação bloqueada e saldo preservado. |
 | Código inexistente | Movimentar produto não cadastrado. | Mensagem de produto não encontrado. |
-| Estoque mínimo | Consultar relatório com item abaixo do mínimo. | Item aparece no relatório. |
-| Valor total | Consultar valor armazenado. | Soma de preço × quantidade de todos os produtos. |
-| Persistência | Fechar e abrir novamente. | Cadastro e histórico continuam gravados. |
+| Estoque mínimo | Consultar produto abaixo do mínimo. | Produto apresentado no relatório. |
+| Valor total | Consultar o valor armazenado. | Soma de preço × quantidade de todos os produtos. |
+| Produtos disponíveis | Consultar produtos com saldo positivo. | Apenas produtos com quantidade maior que zero são apresentados. |
+| Histórico | Consultar movimentações realizadas. | Dados das operações apresentados corretamente. |
+| Persistência | Fechar e abrir novamente o programa. | Cadastros e histórico permanecem gravados. |
 
-Registrem os resultados dos testes e corrijam os problemas encontrados antes de integrar. Não utilizem registros fictícios como se fossem evidências de execução real.
+Os resultados dos testes devem ser registrados pela equipe após a execução real. Um cenário não deve ser considerado aprovado apenas por estar previsto neste roteiro.
 
 ## 9. Evidências e documento PDF
 
-As capturas de tela deverão ser salvas em `evidencias/`. Quando as funcionalidades estiverem prontas, a equipe deverá produzir evidências legíveis de:
+As capturas de tela devem ser salvas no diretório `evidencias/`.
 
-- Menu principal.
-- Cadastro e listagem de produtos.
-- Entrada e saída de mercadorias.
-- Tentativa de saída acima do saldo e respectivo bloqueio.
-- Relatório de produtos abaixo do estoque mínimo.
-- Relatório de valor total armazenado.
-- Histórico de movimentações.
+Recomenda-se organizar os arquivos com nomes claros:
 
-O arquivo `evidencias/README_EVIDENCIAS.md` contém uma lista mais detalhada e orientações para nomear e organizar as capturas.
+```text
+evidencias/
+├── README_EVIDENCIAS.md
+├── 01-menu-principal.png
+├── 02-cadastro-produto.png
+├── 03-listagem-produtos.png
+├── 04-registro-entrada.png
+├── 05-registro-saida.png
+├── 06-bloqueio-estoque-insuficiente.png
+├── 07-relatorio-estoque-baixo.png
+├── 08-valor-total-estoque.png
+├── 09-produtos-disponiveis.png
+├── 10-historico-movimentacoes.png
+└── 11-persistencia-json.png
+```
+
+As imagens devem ser capturas reais da execução do programa, com informações legíveis e correspondentes à versão final do código.
 
 ### Estrutura recomendada para o PDF
 
-1. **Capa:** instituição, disciplina, professor e nomes dos integrantes.
-2. **Problema, objetivo e solução proposta:** contextualização do controle de estoque e apresentação da proposta.
-3. **Funcionalidades implementadas:** descrição somente do que estiver realmente pronto na versão entregue.
-4. **Paradigma imperativo:** explicação de pelo menos três conceitos demonstrados com exemplos reais do código.
-5. **Evidências dos testes e da execução:** capturas que comprovem o funcionamento.
-6. **Considerações finais:** resultados alcançados, dificuldades e possíveis melhorias.
+1. **Capa:** instituição, disciplina, professor e nomes completos dos integrantes.
+2. **Introdução:** apresentação do problema e objetivo do projeto.
+3. **Requisitos:** descrição dos requisitos funcionais e não funcionais.
+4. **Tecnologias:** Python, JSON, Git e GitHub.
+5. **Organização do código:** estrutura dos arquivos e responsabilidades das funções.
+6. **Paradigma imperativo:** explicação de pelo menos três conceitos demonstrados com exemplos reais do código.
+7. **Funcionalidades:** descrição das operações implementadas.
+8. **Persistência:** explicação de como os arquivos JSON armazenam os dados.
+9. **Testes:** cenários executados, resultados e eventuais correções.
+10. **Evidências:** capturas de tela que comprovem o funcionamento.
+11. **Equipe:** divisão de responsabilidades.
+12. **Conclusão:** resultados alcançados, dificuldades e possíveis melhorias.
 
-O documento `documentos/README_DOCUMENTACAO.md` apresenta orientações para elaborar e revisar o PDF. As evidências devem corresponder à versão real do programa. **Não incluam capturas de menus ou funcionalidades que ainda não existam.**
+O PDF final deverá ser colocado no diretório `documentos/`.
 
 ## 10. Git e GitHub
 
-O repositório remoto deverá se chamar:
+O projeto é versionado por meio do Git e hospedado no GitHub.
 
-`sistema-estoque`
+Repositório:
 
-Descrição sugerida:
+https://github.com/Carlysson/sistema-estoque
 
-`Sistema de gerenciamento de estoque em Python utilizando programação imperativa.`
-
-### Configuração inicial
-
-Com o Git instalado, abra o terminal na pasta raiz do projeto e execute:
+### Clonar o repositório
 
 ```bash
-git init
-git add .
-git commit -m "chore: cria estrutura inicial do projeto"
-git branch -M main
-git remote add origin URL_DO_REPOSITORIO
-git push -u origin main
+git clone https://github.com/Carlysson/sistema-estoque.git
 ```
 
-Substitua `URL_DO_REPOSITORIO` pela URL real do repositório criado no GitHub. Não digite esse texto literalmente como endereço remoto.
+### Atualizar a cópia local
 
-### Enviar alterações posteriores
+Antes de começar uma nova tarefa, atualize sua cópia conforme o fluxo combinado pela equipe:
+
+```bash
+git pull origin main
+```
+
+### Enviar alterações
 
 Depois de implementar e testar uma alteração:
 
 ```bash
+git status
 git add .
-git commit -m "feat: descreve a funcionalidade implementada"
-git push
+git commit -m "descreva a alteração realizada"
+git push origin main
 ```
 
 ### Exemplos de mensagens de commit
 
-- `docs: detalha instruções e divisão de tarefas`
-- `feat: implementa cadastro de produtos`
-- `feat: implementa entrada e saída`
-- `fix: impede saída acima do saldo`
-- `feat: adiciona relatórios de estoque`
-- `feat: adiciona histórico de movimentações`
-- `test: verifica validações e relatórios`
-- `docs: adiciona PDF e evidências`
+```text
+feat: implementa cadastro de produtos
+feat: implementa entrada e saída
+fix: impede saída acima do saldo
+feat: adiciona relatórios de estoque
+feat: adiciona histórico de movimentações
+feat: implementa persistência JSON
+feat: implementa menu principal
+docs: atualiza documentação do projeto
+test: registra testes do sistema
+```
 
-As mensagens devem descrever o que realmente mudou. Não criem commits artificiais para aparentar participação: o histórico do Git deve representar a evolução verdadeira do trabalho de cada integrante.
+As mensagens devem representar as alterações realmente realizadas.
 
 ### Boas práticas de colaboração
 
-- Antes de começar uma tarefa, atualize sua cópia local conforme o fluxo combinado pela equipe.
-- Evite que duas pessoas alterem simultaneamente o mesmo trecho.
-- Faça commits pequenos e relacionados a uma alteração coerente.
-- Leia as diferenças antes de confirmar um commit.
-- Revise conflitos com atenção; não aceite alterações sem compreender o que será mantido.
-- Teste a versão integrada antes de considerar uma tarefa concluída.
+- Trabalhar em alterações pequenas e coerentes.
+- Revisar as diferenças antes de realizar o commit.
+- Evitar alterações simultâneas no mesmo trecho sem alinhamento.
+- Resolver conflitos com atenção.
+- Testar o código integrado antes de considerar uma funcionalidade concluída.
+- Manter o repositório atualizado.
 
 ## 11. Limitações e cuidados
 
-A proposta utiliza arquivos JSON locais e possui limitações importantes:
+O sistema foi desenvolvido para fins acadêmicos e possui as seguintes limitações:
 
-- Os dados ficam armazenados localmente em arquivos JSON.
+- Os dados são armazenados localmente em arquivos JSON.
 - Cópias diferentes do projeto não compartilham automaticamente os mesmos dados.
-- Não há autenticação nem controle de acesso por usuário.
+- Não há autenticação ou controle de acesso por usuário.
 - Não há banco de dados servidor.
-- Não há interface gráfica; a interação será feita pelo terminal.
+- A interface é exclusivamente de terminal.
 - Não há sincronização automática entre computadores.
-- O valor total será uma estimativa baseada no preço unitário registrado e no saldo atual; não representa necessariamente o valor contábil ou comercial completo do negócio.
-- Trata-se de um projeto acadêmico e demonstrativo, não de um sistema comercial pronto.
-- Alterações manuais incorretas podem invalidar a estrutura dos JSON. Mantenham cópias de segurança e evitem editar os arquivos enquanto o programa estiver rodando.
+- O valor total representa uma estimativa baseada no preço unitário registrado e na quantidade disponível.
+- Alterações manuais incorretas podem comprometer a estrutura dos arquivos JSON.
+- O programa não possui recursos avançados de auditoria ou recuperação automática de dados.
+
+Recomenda-se manter cópias de segurança dos arquivos JSON e evitar alterações manuais enquanto o programa estiver em execução.
+
+Trata-se de um projeto acadêmico demonstrativo, não de um sistema comercial completo.
 
 ## 12. Integrantes
 
@@ -385,11 +534,13 @@ A proposta utiliza arquivos JSON locais e possui limitações importantes:
 - Paulo
 - Paulista
 
-Antes da entrega, adicionem os nomes completos conforme o padrão exigido pela instituição e confiram a identificação de todos os integrantes na capa do PDF e no repositório, se necessário.
+Os nomes completos devem ser utilizados na versão final da documentação, conforme o padrão exigido pela instituição.
 
 ## 13. Licença
 
-Este é um projeto acadêmico desenvolvido para fins educacionais. Uma licença de software específica poderá ser adicionada pelo grupo caso seja necessária para a publicação ou reutilização do código.
+Este é um projeto acadêmico desenvolvido para fins educacionais.
+
+Uma licença de software específica poderá ser adicionada pela equipe caso seja necessária para a publicação ou reutilização do código.
 
 ---
 
