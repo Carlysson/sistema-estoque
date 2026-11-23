@@ -1,1 +1,20 @@
-[]
+[
+    {
+        "codigo": "002",
+        "nome": "Mouse USB",
+        "tipo": "entrada",
+        "quantidade": 7,
+        "saldo_anterior": 3,
+        "saldo_atual": 10,
+        "data_hora": "23/11/2026 14:03:44"
+    },
+    {
+        "codigo": "001",
+        "nome": "Teclado USB",
+        "tipo": "saida",
+        "quantidade": 4,
+        "saldo_anterior": 10,
+        "saldo_atual": 6,
+        "data_hora": "23/11/2026 14:11:20"
+    }
+]

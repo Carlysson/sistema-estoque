@@ -1,1 +1,23 @@
-[]
+[
+    {
+        "codigo": "001",
+        "nome": "Teclado USB",
+        "preco": 80.0,
+        "quantidade": 6,
+        "estoque_minimo": 5
+    },
+    {
+        "codigo": "002",
+        "nome": "Mouse USB",
+        "preco": 40.0,
+        "quantidade": 10,
+        "estoque_minimo": 5
+    },
+    {
+        "codigo": "003",
+        "nome": "Monitor 24",
+        "preco": 750.0,
+        "quantidade": 0,
+        "estoque_minimo": 2
+    }
+]
